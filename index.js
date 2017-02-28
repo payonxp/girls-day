@@ -3,13 +3,12 @@ var bodyParser = require('body-parser')
 var http = require('http')
 var app = express()
 var session = require('express-session')
+var querystring = require('querystring')
 
 var accounts = require('./account')
 var model = require('./model')
 
 app.use(bodyParser.json())
-
-app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }}))
 
 app.use('/user', accounts)
 
@@ -19,12 +18,12 @@ var server = app.listen(3000, function() {
 })
 
 // login
-app.post('/login', function(req, response) {
-
+app.post('/login', function(request, response) {
+	
 	// receive id and pwd from request
     var data = querystring.stringify({
-        id: req.body.id,
-        pwd: req.body.pwd,
+        id: request.body.id,
+        pwd: request.body.pwd,
         act: 'login'
     });
     var options = {
@@ -49,7 +48,6 @@ app.post('/login', function(req, response) {
             var json = JSON.parse(result);
             if (json.ret == 1 && json.msg == "ok") {
                 loginSuccessHandler(json.data.id)   // id & pwd correct
-                req.session.id = id                 // store id in session
             }
             response.send(JSON.stringify({
                 ret: json.ret,

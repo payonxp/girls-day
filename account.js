@@ -4,19 +4,19 @@ var model = require('./model')
 
 const querystring = require('querystring')
 
-account.use('/user', function (req, res, next) {
-    console.log(req.session.id)
-    next()
+account.get('/info', function(req, res) {
+	
+	model.User.findOne({ id: 10142510186 }, function(err, user) {
+		res.send(JSON.stringify(user))
+	})
+
 })
 
-account.get('/user/test', function(req, res) {
-    res.send('testing')
-})
 
 // change user info
-account.post('/user/info', function(req, res) {
+account.post('/info', function(req, res) {
 
-    model.User.findOne( { id:id }, function(err, user) {
+    model.User.findOne( { id: req.body.id }, function(err, user) {
         user.name = req.body.name
         user.sex = req.body.sex
         user.phone = req.body.phone
