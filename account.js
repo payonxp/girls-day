@@ -4,9 +4,9 @@ var model = require('./model')
 
 const querystring = require('querystring')
 
-account.get('/info', function(req, res) {
+account.get('/info/:id', function(req, res) {
 	
-	model.User.findOne({ id: 10142510186 }, function(err, user) {
+	model.User.findOne({ id: req.params.id }, function(err, user) {
 		res.send(JSON.stringify(user))
 	})
 
@@ -14,9 +14,9 @@ account.get('/info', function(req, res) {
 
 
 // change user info
-account.post('/info', function(req, res) {
+account.post('/info/:id', function(req, res) {
 
-    model.User.findOne( { id: req.body.id }, function(err, user) {
+    model.User.findOne( { id: req.params.id }, function(err, user) {
         user.name = req.body.name
         user.sex = req.body.sex
         user.phone = req.body.phone

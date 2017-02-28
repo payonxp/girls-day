@@ -4,7 +4,7 @@ var http = require('http')
 var app = express()
 var session = require('express-session')
 var querystring = require('querystring')
-
+var md5 = require('blueimp-md5')
 var accounts = require('./account')
 var model = require('./model')
 
@@ -47,11 +47,12 @@ app.post('/login', function(request, response) {
         res.on('end', function() {
             var json = JSON.parse(result);
             if (json.ret == 1 && json.msg == "ok") {
-                loginSuccessHandler(json.data.id)   // id & pwd correct
+                loginSuccessHandler(md5(json.data.id, "1a2b3c4d"))   // id & pwd correct
             }
             response.send(JSON.stringify({
                 ret: json.ret,
-                msg: json.msg
+                msg: json.msg,
+                id: md5(json.data.id)
             }))
         })
     });

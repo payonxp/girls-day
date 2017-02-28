@@ -9,6 +9,7 @@
   "author": "morroc",
   "license": "ISC",
   "dependencies": {
+    "blueimp-md5": "^2.7.0",
     "body-parser": "^1.16.1",
     "mongoose": "^4.8.5"
   }
