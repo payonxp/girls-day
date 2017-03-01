@@ -11,7 +11,9 @@ const Schema = mongoose.Schema
 
 // User
 var user = new Schema({
-	id: Number,
+	uid: Number,
+	username: String,
+	password: String,
 	name: String,
 	sex: Number,
 	phone: Number,
@@ -26,15 +28,13 @@ var wish = new Schema({
 	descp: String,       // description
 	time: Date,
 	tag: [String],
-	status: Number,      // 0: all
-						 // 1: wait for receiving
-						 // 2: received
-						 // 3: complete
+	status: Number,			 // 0: wait for receiving
+											 // 1: received
+						 				 	 // 2: complete
+	loc: Number,
 	userId: Number,
 	recvId: Number,
 })
-
-
 
 // models
 var User = mongoose.model('User', user)
