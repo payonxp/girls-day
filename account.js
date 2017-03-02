@@ -26,13 +26,12 @@ account.post('/signup', function(request, response) {
 
     // send login msg
     var req = http.request(options, function(res) {
-        var result
+        var result = "";
         res.setEncoding('utf8')
         res.on('data', function(chunk) {
-            result = result + chunk
+            result += chunk
         })
-        res.on('end', function() {
-            console.log(result)
+        .on('end', function() {
             var json = JSON.parse(result)
             if (json.ret == 1 && json.msg == "ok") {
                 var result = authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"))   // id & pwd correct
