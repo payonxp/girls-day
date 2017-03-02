@@ -3,6 +3,7 @@ var account = express.Router()
 var model = require('./model')
 var querystring = require('querystring')
 var http = require('http')
+var md5 = require('blueimp-md5')
 
 // signup
 account.post('/signup', function(request, response) {
@@ -35,7 +36,7 @@ account.post('/signup', function(request, response) {
             var json = JSON.parse(result)
             if (json.ret == 1 && json.msg == "ok") {
                 var ret = authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"))   // id & pwd correct
-                response.send(JSON.stringify({
+				response.send(JSON.stringify({
                     ret: ret.ret,
                     msg: ret.msg,
                     data: {
@@ -66,6 +67,7 @@ account.post('/signup', function(request, response) {
                     password: password,
                 })
                 newUser.save()
+				console.log(2)
                 return { ret: '0000', msg: 'ok', id: newUser._id }
             } else {
                 return { ret: '0001', msg: '用户名已存在'}
