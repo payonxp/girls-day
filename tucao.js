@@ -2,6 +2,17 @@ var express = require('express')
 var tucao = express.Router()
 var model = require('./model')
 
+// get tucao
+tucao.get('/getlist', function(req, res) {
+
+    model.Tucao.find({}, function(err, list) {
+        res.send(JSON.stringify({
+            ret: '0000',
+            data: list
+        }))
+    })
+})
+
 // send tucao
 tucao.post('/send', function(req, res) {
 
