@@ -21,3 +21,5 @@ notice.post('/read', function(req, res) {
         notice.save()
     })
 })
+
+module.exports = notice

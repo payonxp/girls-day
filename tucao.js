@@ -44,3 +44,5 @@ tucao.post('/like', function(req, res) {
 
     })
 })
+
+module.exports = tucao
