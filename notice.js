@@ -16,7 +16,7 @@ notice.get('/getnotice', function(req, res) {
 // read
 notice.post('/read', function(req, res) {
 
-    model.Notice.find({ uid: req.body.uid, _id: req.body.cid}, function(err, notice) {
+    model.Notice.findOne({ uid: req.body.uid, _id: req.body.cid}, function(err, notice) {
         notice.read = true
         notice.save()
     })

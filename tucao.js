@@ -31,9 +31,9 @@ tucao.post('/send', function(req, res) {
 // like
 tucao.post('/like', function(req, res) {
 
-    model.Tucao.find({ _id: req.body.cid}, function(err, tucao) {
+    model.Tucao.findOne({ _id: req.body.cid}, function(err, tucao) {
 
-        model.Like.find({uid: req.body.uid, cid: req.body.cid}, function(err, like) {
+        model.Like.findOne({uid: req.body.uid, cid: req.body.cid}, function(err, like) {
             if (like == null) {
                 var newLike = new model.Like({
                     uid: req.body.uid,
