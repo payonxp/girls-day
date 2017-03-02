@@ -53,17 +53,17 @@ wish.post('/create', function(req, res) {
 // finish wish
 wish.post('/finish', function(req, res) {
 
-    var wish = model.Wish.find({
-        _id: req.query.wid,
-        userId: req.query.uid
+    model.Wish.findOne({
+        _id: req.body.wid,
+        userId: req.body.uid
+    }, function(err, _wish) {
+        _wish.status = 2
+        _wish.save()
+
+        res.send(JSON.stringify({
+            ret: '0000'
+        }))
     })
-
-    wish.status = 2
-    wish.save()
-
-    res.send(JSON.stringify({
-        ret: '0000'
-    }))
 })
 
 // accept wish
@@ -78,7 +78,7 @@ wish.post('/accept', function(req, res) {
 
         res.send(JSON.stringify({
             ret: '0000'
-        }))  
+        }))
     })
 })
 
