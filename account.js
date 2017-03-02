@@ -82,7 +82,7 @@ account.post('/login', function(req, res) {
 
     model.User.findOne({
         username: req.body.id,
-        password: md5(request.body.pwd, "1a2b3c4d")
+        password: md5(req.body.pwd, "1a2b3c4d")
     }, function(err, user) {
         if (user === null) {
             res.send(JSON.stringify({
