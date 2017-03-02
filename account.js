@@ -69,7 +69,6 @@ account.post('/signup', function(request, response) {
                     password: password,
                 })
                 newUser.save()
-				console.log(2)
                 callback({ ret: '0000', msg: 'ok', id: newUser._id })
             } else {
                 callback({ ret: '0001', msg: '用户名已存在'})
