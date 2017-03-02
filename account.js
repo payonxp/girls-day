@@ -2,6 +2,7 @@ var express = require('express')
 var account = express.Router()
 var model = require('./model')
 var querystring = require('querystring')
+var http = require('http')
 
 // signup
 account.post('/signup', function(request, response) {
