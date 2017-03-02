@@ -32,7 +32,8 @@ account.post('/signup', function(request, response) {
             result += chunk;
         })
         res.on('end', function() {
-            var json = JSON.parse(result);
+            console.log(result)
+            var json = JSON.parse(result)
             if (json.ret == 1 && json.msg == "ok") {
                 var result = authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"))   // id & pwd correct
                 response.send(JSON.stringify({
