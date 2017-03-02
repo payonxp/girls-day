@@ -69,11 +69,12 @@ wish.post('/finish', function(req, res) {
 // accept wish
 wish.post('/accept', function(req, res) {
 
-    model.Wish.find({ _id: req.body.wid }, function(err, wish) {
-        wish.status = 1
-        wish.recvId = req.query.uid
+    model.Wish.findOne({ _id: req.body.wid }, function(err, _wish) {
+		console.log(_wish)
+        _wish.status = 1
+        _wish.recvId = req.body.uid
 
-        wish.save()
+        _wish.save()
 
         res.send(JSON.stringify({
             ret: '0000'
