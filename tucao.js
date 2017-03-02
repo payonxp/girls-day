@@ -47,7 +47,6 @@ tucao.post('/like', function(req, res) {
             }
         })
 
-
         tucao.save()
         res.send(JSON.stringify({
             ret: '0000'
