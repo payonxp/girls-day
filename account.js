@@ -33,13 +33,13 @@ account.post('/signup', function(request, response) {
         res.on('end', function() {
             var json = JSON.parse(result);
             if (json.ret == 1 && json.msg == "ok") {
-                var result = authSuccessHandler(request.body.username, md5(request.body.password, "1a2b3c4d"))   // id & pwd correct
+                var result = authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"))   // id & pwd correct
                 response.send(JSON.stringify({
                     ret: result.ret,
                     msg: result.msg,
                     data: {
                         uid: result.id,
-                        username: request.body.username
+                        username: request.body.id
                     }
                 }))
             } else {
@@ -64,7 +64,7 @@ account.post('/signup', function(request, response) {
                     password: password,
                 })
                 newUser.save()
-                return { ret: '0000', msg: 'ok', id: newUser.id }
+                return { ret: '0000', msg: 'ok', id: newUser._id }
             } else {
                 return { ret: '0001', msg: '用户名已存在'}
             }
@@ -88,7 +88,7 @@ account.post('/login', function(req, res) {
             res.send(JSON.stringify({
                 ret: '0000',
                 msg: 'ok',
-                id: user.id,
+                uid: user._id,
                 username: user.username
             }))
         }
