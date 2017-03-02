@@ -4,7 +4,7 @@ var model = require('./model')
 var querystring = require('querystring')
 
 // signup
-app.post('/signup', function(request, response) {
+account.post('/signup', function(request, response) {
 
     // receive id and pwd from request
     var data = querystring.stringify({
