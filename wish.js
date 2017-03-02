@@ -13,9 +13,9 @@ wish.get('/getlist', function(req, res) {
         query.status = req.query.status
     }
 
-	if (req.query.uid != null) {
-		query.userId = req.query.uid
-	}
+  	if (req.query.uid != null) {
+  		query.userId = req.query.uid
+  	}
 
     if (req.query.from == 0) {
         query.userId = req.query.uid
@@ -70,7 +70,6 @@ wish.post('/finish', function(req, res) {
 wish.post('/accept', function(req, res) {
 
     model.Wish.findOne({ _id: req.body.wid }, function(err, _wish) {
-		console.log(_wish)
         _wish.status = 1
         _wish.recvId = req.body.uid
 
