@@ -31,15 +31,15 @@ account.post('/signup', function(request, response) {
         res.on('data', function(chunk) {
             result += chunk
         })
-        .on('end', function() {
+        res.on('end', function() {
             var json = JSON.parse(result)
             if (json.ret == 1 && json.msg == "ok") {
-                var result = authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"))   // id & pwd correct
+                var ret = authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"))   // id & pwd correct
                 response.send(JSON.stringify({
-                    ret: result.ret,
-                    msg: result.msg,
+                    ret: ret.ret,
+                    msg: ret.msg,
                     data: {
-                        uid: result.id,
+                        uid: ret.id,
                         username: request.body.id
                     }
                 }))
