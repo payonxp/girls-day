@@ -40,18 +40,17 @@ tucao.post('/like', function(req, res) {
                     cid: req.body.cid
                 })
                 newLike.save()
-                tucao.liked = tucao.liked + 1
+                tucao.liked += 1
+                tucao.save()
             } else {
                 like.remove()
-                tucao.liked = tucao.liked - 1
+                tucao.liked -= 1
+                tucao.save()
             }
+            res.send(JSON.stringify({
+                ret: '0000'
+            }))
         })
-
-        tucao.save()
-        res.send(JSON.stringify({
-            ret: '0000'
-        }))
-
     })
 })
 
