@@ -5,14 +5,21 @@ var app = express()
 var session = require('express-session')
 var querystring = require('querystring')
 var md5 = require('blueimp-md5')
-var accounts = require('./account')
-var wishs = require('./wish')
+
+var account = require('./account')
+var wish = require('./wish')
 var model = require('./model')
+var tucao = require('./tucao')
+var notice = require('./notice')
 
 app.use(bodyParser.json())
 
-app.use('/user', accounts)
-app.use('/wish', wishs)
+// routers
+app.use('/user', account)
+app.use('/wish', wish)
+app.use('/tucao', tucao)
+app.use('/notice', notice)
+
 
 var server = app.listen(3000, function() {
     var port = server.address().port

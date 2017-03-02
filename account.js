@@ -98,9 +98,9 @@ account.post('/login', function(req, res) {
 
 
 // get info
-account.get('/info/:id', function(req, res) {
+account.get('/info', function(req, res) {
 
-	model.User.findOne({ id: req.params.id }, function(err, user) {
+	model.User.findOne({ id: req.query.uid }, function(err, user) {
 		if (user === null) {
             res.send(JSON.stringify({
                 ret: '0001'
@@ -117,9 +117,9 @@ account.get('/info/:id', function(req, res) {
 
 
 // change user info
-account.post('/info/:id', function(req, res) {
+account.post('/info', function(req, res) {
 
-    model.User.findOne( { id: req.params.id }, function(err, user) {
+    model.User.findOne( { id: req.body.uid }, function(err, user) {
         user.name = req.body.name
         user.sex = req.body.sex
         user.phone = req.body.phone

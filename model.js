@@ -11,7 +11,6 @@ const Schema = mongoose.Schema
 
 // User
 var user = new Schema({
-	uid: Number,
 	username: String,
 	password: String,
 	name: String,
@@ -32,17 +31,44 @@ var wish = new Schema({
 											 // 1: received
 						 				 	 // 2: complete
 	loc: Number,
-	userId: Number,
-	recvId: Number,
+	userId: String,
+	recvId: String,
+})
+
+// Tucao
+var tucao = new Schema({
+	descp: String,
+	time: Date,
+	userId: String,
+	liked: { type: Number, default: 0},
+})
+
+// Like
+var like = new Schema({
+	uid: String,
+	cid: String
+})
+
+// Notice
+var notice = new Schema({
+	uid: String,
+	descp: String,
+	read: { type: Boolean, default: false }
 })
 
 // models
 var User = mongoose.model('User', user)
 var Wish = mongoose.model('Wish', wish)
+var Tucao = mongoose.model('Tucao', tucao)
+var Like = mongoose.model('Like', like)
+var Notice = mongoose.model('Notice', notice)
 
 // exports
 var model = {}
 model.User = User
 model.Wish = wish
+model.Tucao = tucao
+model.Like = like
+model.Notice = notice
 
 module.exports = model

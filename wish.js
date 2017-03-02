@@ -32,14 +32,14 @@ wish.get('/getlist', function(req, res) {
 })
 
 // create new wish
-wish.post('/create/:id', function(req, res) {
+wish.post('/create', function(req, res) {
 
     var newWish = new model.Wish({
         descp: req.body.descp,
         time: new Date(),
         tag: req.body.tag,
         status: 1,
-        userId: req.params.uid,
+        userId: req.body.uid,
     })
     newWish.save()
 
