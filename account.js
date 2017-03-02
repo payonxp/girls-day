@@ -26,13 +26,13 @@ account.post('/signup', function(request, response) {
 
     // send login msg
     var req = http.request(options, function(res) {
-        var result = ''
+        var result
         res.setEncoding('utf8')
         res.on('data', function(chunk) {
-            result += chunk
-            console.log(chunk)
+            result = result + chunk
         })
         res.on('end', function() {
+            console.log(result)
             var json = JSON.parse(result)
             if (json.ret == 1 && json.msg == "ok") {
                 var result = authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"))   // id & pwd correct
@@ -79,8 +79,8 @@ account.post('/signup', function(request, response) {
 account.post('/login', function(req, res) {
 
     model.User.findOne({
-        username: req.body.username,
-        password: md5(request.body.password, "1a2b3c4d")
+        username: req.body.id,
+        password: md5(request.body.pwd, "1a2b3c4d")
     }, function(err, user) {
         if (user === null) {
             res.send(JSON.stringify({
