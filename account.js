@@ -35,15 +35,17 @@ account.post('/signup', function(request, response) {
         res.on('end', function() {
             var json = JSON.parse(result)
             if (json.ret == 1 && json.msg == "ok") {
-                var ret = authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"))   // id & pwd correct
-				response.send(JSON.stringify({
-                    ret: ret.ret,
-                    msg: ret.msg,
-                    data: {
-                        uid: ret.id,
-                        username: request.body.id
-                    }
-                }))
+                authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"), 
+                    function(ret) {
+                        response.send(JSON.stringify({
+                            ret: ret.ret,
+                            msg: ret.msg,
+                            data: {
+                                uid: ret.id,
+                                username: request.body.id
+                            }
+                        }))
+                    })   // id & pwd correct
             } else {
                 response.send(JSON.stringify({
                     ret: '0001',
@@ -58,7 +60,7 @@ account.post('/signup', function(request, response) {
     req.end()
 
     // id & pwd correct
-    function authSuccessHandler(username, password) {
+    function authSuccessHandler(username, password, callback) {
         model.User.findOne( { username: username }, function(err, user){
             if (user === null) {    // new user
                 var newUser = new model.User({
@@ -68,9 +70,9 @@ account.post('/signup', function(request, response) {
                 })
                 newUser.save()
 				console.log(2)
-                return { ret: '0000', msg: 'ok', id: newUser._id }
+                callback({ ret: '0000', msg: 'ok', id: newUser._id })
             } else {
-                return { ret: '0001', msg: '用户名已存在'}
+                callback({ ret: '0001', msg: '用户名已存在'})
             }
         })
     }
