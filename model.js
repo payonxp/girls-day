@@ -66,9 +66,9 @@ var Notice = mongoose.model('Notice', notice)
 // exports
 var model = {}
 model.User = User
-model.Wish = wish
-model.Tucao = tucao
-model.Like = like
-model.Notice = notice
+model.Wish = Wish
+model.Tucao = Tucao
+model.Like = Like
+model.Notice = Notice
 
 module.exports = model

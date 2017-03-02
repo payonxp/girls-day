@@ -4,7 +4,7 @@ var model = require('./model')
 
 // get wish
 wish.get('/getlist', function(req, res) {
-    var query
+    var query = {}
 
     if (req.query.loc != null) {
         query.loc = req.query.loc
@@ -12,9 +12,10 @@ wish.get('/getlist', function(req, res) {
     if (req.query.status != null) {
         query.status = req.query.status
     }
-    if (req.query.uid != null) {
-        query._id = req.query.uid
-    }
+
+	if (req.query.uid != null) {
+		query.userId = req.query.uid
+	}
 
     if (req.query.from == 0) {
         query.userId = req.query.uid
@@ -38,7 +39,8 @@ wish.post('/create', function(req, res) {
         descp: req.body.descp,
         time: new Date(),
         tag: req.body.tag,
-        status: 1,
+		loc: req.body.loc,
+        status: 0,
         userId: req.body.uid,
     })
     newWish.save()
