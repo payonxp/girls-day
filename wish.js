@@ -61,7 +61,7 @@ wish.post('/finish', function(req, res) {
         _wish.save()
 
         model.User.findOne( { _id: _wish.userId}, function(err, user) {
-            model.User.findOne( {_id: _wish.recvId}, function(err. recer) {
+            model.User.findOne( {_id: _wish.recvId}, function(err, recer) {
 
                 var newNotice = new model.Notice({
                     uid: _wish.recvId,
@@ -86,10 +86,10 @@ wish.post('/accept', function(req, res) {
         _wish.save()
 
         model.User.findOne( { _id: _wish.userId}, function(err, user) {
-            model.User.findOne( {_id: _wish.recvId}, function(err. recer) {
+            model.User.findOne( {_id: _wish.recvId}, function(err, recer) {
                 var newNotice = new model.Notice({
                     uid: _wish.userId,
-                    descp: '您的愿望已被接受'
+                    descp: '您的愿望已被接受',
                     data: {
                         username: recer.username,
                         sex: recer.sex,
@@ -101,7 +101,7 @@ wish.post('/accept', function(req, res) {
 
                 var newNotice2 = new model.Notice({
                     uid: _wish.recerId,
-                    descp: '您已接受愿望'
+                    descp: '您已接受愿望',
                     data: {
                         username: user.username,
                         sex: user.sex,
