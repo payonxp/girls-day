@@ -23,13 +23,13 @@ wish.get('/getlist', function(req, res) {
         query.recvId = req.query.uid
     }
 
-    model.Wish.find(query, function(err, wishes) {
-        res.send(JSON.stringify({
-            ret: '0000',
-            data: wishes
-        }))
-    })
-
+    model.Wish.find(query).skip(req.query.page * 10).limit(10).sort('-time')
+      .exec(function(err, wishes) {
+          res.send(JSON.stringify({
+              ret: '0000',
+              data: wishes
+          }))
+      })
 })
 
 // create new wish

@@ -5,12 +5,13 @@ var model = require('./model')
 // get tucao
 tucao.get('/getlist', function(req, res) {
 
-    model.Tucao.find({}, function(err, list) {
-        res.send(JSON.stringify({
-            ret: '0000',
-            data: list
-        }))
-    })
+    model.Tucao.find({}).skip(req.query.page * 10).limit(10).sort('-time')
+      .exec( function(err, list) {
+          res.send(JSON.stringify({
+              ret: '0000',
+              data: list
+          }))
+      })
 })
 
 // send tucao
