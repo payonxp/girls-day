@@ -15,11 +15,18 @@ var notice = require('./notice')
 app.use(bodyParser.json())
 
 // routers
+
+app.use('/', function(req, res, next) {
+		
+	res.set('Access-Control-Allow-Origin', '*')
+	res.set('Access-Control-Allow-Credentials', true)
+	next()
+})
+
 app.use('/user', account)
 app.use('/wish', wish)
 app.use('/tucao', tucao)
 app.use('/notice', notice)
-
 
 var server = app.listen(3000, function() {
     var port = server.address().port
