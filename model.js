@@ -53,6 +53,12 @@ var like = new Schema({
 var notice = new Schema({
 	uid: String,
 	descp: String,
+	data: {
+			username: String,
+			sex: Number,
+			phone: Number,
+			email: String,
+	},
 	read: { type: Boolean, default: false }
 })
 

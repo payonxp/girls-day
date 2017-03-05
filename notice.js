@@ -15,7 +15,8 @@ notice.get('/getnotice', function(req, res) {
 
 // read
 notice.post('/read', function(req, res) {
-
+    // TODO: read all in list
+    // TODO: when accept and finish wish send notice
     model.Notice.findOne({ uid: req.body.uid, _id: req.body.cid}, function(err, notice) {
         notice.read = true
         notice.save()

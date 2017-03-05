@@ -35,7 +35,7 @@ account.post('/signup', function(request, response) {
         res.on('end', function() {
             var json = JSON.parse(result)
             if (json.ret == 1 && json.msg == "ok") {
-                authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"), 
+                authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"),
                     function(ret) {
                         response.send(JSON.stringify({
                             ret: ret.ret,
@@ -129,7 +129,7 @@ account.post('/info', function(req, res) {
         user.sex = req.body.sex
         user.phone = req.body.phone
         user.email = req.body.email
-		user.active = true
+		    user.active = true
         user.save()
 
         res.send(JSON.stringify({
