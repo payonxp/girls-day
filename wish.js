@@ -112,7 +112,7 @@ wish.post('/accept', function(req, res) {
                     }
                 })
                 newNotice.save()
-                mail.sendEmail(user.email, user.name, "您的愿望已被"+recer.name+"同学领取",recer.phone)
+                mail.sendEmail("您在HELPMAP有被领取的心愿", user.email, user.name, "您的愿望已被"+recer.name+"同学领取",recer.phone)
 
                 var newNotice2 = new model.Notice({
                     uid: _wish.recerId,
@@ -125,7 +125,7 @@ wish.post('/accept', function(req, res) {
                     }
                 })
                 newNotice2.save()
-                mail.sendEmail(recer.email, recer.name, "您已领取"+user.name+"同学的愿望",user.phone)
+                mail.sendEmail("您在HELPMAP领取了心愿", recer.email, recer.name, "您已领取"+user.name+"同学的愿望",user.phone)
             })
         })
 

@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 
 var mail = {}
 
-mail.sendEmail = function(address, descp, name1, promt_name2, phone) {
+mail.sendEmail = function(title, address, descp, name1, promt_name2, phone) {
   let smtpConfig = {
       host: 'smtp.mxhichina.com',
       port: 25,
@@ -21,7 +21,7 @@ let transporter = nodemailer.createTransport(smtpConfig);
 let mailOptions = {
     from: '"Helmap" <administrator@helmap.com>', // sender address
     to: address, // list of receivers
-    subject: '您在HELMAP的心愿已被领取', // Subject line
+    subject: title, // Subject line
     html: `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,7 +98,7 @@ let mailOptions = {
                       <div>
                         <p class="p1">` + name1 + `同学，你好！</p>
                         <p class="p1">欢迎使用心愿墙，</p>
-                        <p class="p1">` + promt_name2 + `:
+                        <p class="p1">` + promt_name2 + `: </p>
                         <p class="p1">` + descp + `</p>
                         <p class="p1">以下是他/她的联系方式，请尽快与其联系：</p>
                         <p class="p2">
