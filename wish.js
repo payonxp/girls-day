@@ -33,7 +33,7 @@ wish.get('/getlist', function(req, res) {
 // create new wish
 wish.post('/create', function(req, res) {
 
-    model.User.findOne({_id: uid} ,function(err, user){
+    model.User.findOne({_id: req.body.uid} ,function(err, user){
       if (user.vip == true && user.wishNum > 8 || user.vip == false && user.wishNum > 5 ) {
         res.send(JSON.stringify({
             ret: '0001',
@@ -72,7 +72,7 @@ wish.post('/finish', function(req, res) {
 
         model.User.findOne( { _id: _wish.userId}, function(err, user) {
             model.User.findOne( {_id: _wish.recvId}, function(err, recer) {
-              
+
                 user.wishNum -= 1
                 user.save()
 
