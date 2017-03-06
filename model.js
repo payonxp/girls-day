@@ -34,6 +34,7 @@ var wish = new Schema({
 	loc: Number,
 	userId: String,
 	recvId: String,
+	sex: Number,
 })
 
 // Tucao

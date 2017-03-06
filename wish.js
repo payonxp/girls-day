@@ -50,6 +50,7 @@ wish.post('/create', function(req, res) {
             loc: req.body.loc,
             status: 0,
             userId: req.body.uid,
+            sex: user.sex
         })
         newWish.save()
 
@@ -93,7 +94,12 @@ wish.post('/finish', function(req, res) {
 wish.post('/accept', function(req, res) {
 
     model.Wish.findOne({ _id: req.body.wid }, function(err, _wish) {
-
+        if (_wish.userId == req.body.uid) {
+            res.send(JSON.stringify({
+                ret: '0001',
+                msg: '你不能领取自己的任务喔=。='
+            }))
+        }
         _wish.status = 1
         _wish.recvId = req.body.uid
 
