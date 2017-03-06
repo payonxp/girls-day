@@ -7,6 +7,14 @@ tucao.get('/getlist', function(req, res) {
 
     model.Tucao.find({}).skip(req.query.page * 10).limit(10).sort('-time')
       .exec( function(err, list) {
+
+          var likeList = []
+          for (var tucao in list) {
+              model.Like.findOne({ uid: req.query.uid, cid: tucao._id} {
+
+              })
+          }
+
           res.send(JSON.stringify({
               ret: '0000',
               data: list

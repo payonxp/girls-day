@@ -36,7 +36,7 @@ account.post('/signup', function(request, response) {
             var json = JSON.parse(result)
             if (json.ret == 1 && json.msg == "ok") {
                 authSuccessHandler(request.body.id, md5(request.body.pwd, "1a2b3c4d"),
-                    function(ret) {
+                json.data.name, function(ret) {
                         response.send(JSON.stringify({
                             ret: ret.ret,
                             msg: ret.msg,
@@ -60,13 +60,14 @@ account.post('/signup', function(request, response) {
     req.end()
 
     // id & pwd correct
-    function authSuccessHandler(username, password, callback) {
+    function authSuccessHandler(username, password, name, callback) {
         model.User.findOne( { username: username }, function(err, user){
             if (user === null) {    // new user
                 var newUser = new model.User({
                     id: md5(username, '1a2b3c4d5e'),
                     username: username,
                     password: password,
+                    name: name,
                 })
                 newUser.save()
                 callback({ ret: '0000', msg: 'ok', id: newUser._id })

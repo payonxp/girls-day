@@ -20,6 +20,7 @@ var user = new Schema({
 	vip: { type:Boolean, default: false },        // is vip
 	active: { type:Boolean, default: false },     // already completed personal info
 	banned: { type:Boolean, default: false },     // banned
+	wishNum: {type:Number, default: 0}
 })
 
 // Wish

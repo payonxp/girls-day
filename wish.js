@@ -1,6 +1,7 @@
 var express = require('express')
 var wish = express.Router()
 var model = require('./model')
+var mail = require('./mail')
 
 // get wish
 wish.get('/getlist', function(req, res) {
@@ -9,13 +10,10 @@ wish.get('/getlist', function(req, res) {
     if (req.query.loc != null) {
         query.loc = req.query.loc
     }
+
     if (req.query.status != null) {
         query.status = req.query.status
     }
-
-  	if (req.query.uid != null) {
-  		query.userId = req.query.uid
-  	}
 
     if (req.query.from == 0) {
         query.userId = req.query.uid
@@ -35,19 +33,31 @@ wish.get('/getlist', function(req, res) {
 // create new wish
 wish.post('/create', function(req, res) {
 
-    var newWish = new model.Wish({
-        descp: req.body.descp,
-        time: new Date(),
-        tag: req.body.tag,
-		    loc: req.body.loc,
-        status: 0,
-        userId: req.body.uid,
-    })
-    newWish.save()
+    model.User.findOne({_id: uid} ,function(err, user){
+      if (user.vip == true && user.wishNum > 8 || user.vip == false && user.wishNum > 5 ) {
+        res.send(JSON.stringify({
+            ret: '0001',
+            msg: '您发起的愿望已超出上限'
+        }))
+      } else {
+        user.wishNum += 1
+        user.save()
 
-    res.send(JSON.stringify({
-        ret: '0000'
-    }))
+        var newWish = new model.Wish({
+            descp: req.body.descp,
+            time: new Date(),
+            tag: req.body.tag,
+            loc: req.body.loc,
+            status: 0,
+            userId: req.body.uid,
+        })
+        newWish.save()
+
+        res.send(JSON.stringify({
+            ret: '0000'
+        }))
+      }
+    })
 })
 
 // finish wish
@@ -62,6 +72,9 @@ wish.post('/finish', function(req, res) {
 
         model.User.findOne( { _id: _wish.userId}, function(err, user) {
             model.User.findOne( {_id: _wish.recvId}, function(err, recer) {
+              
+                user.wishNum -= 1
+                user.save()
 
                 var newNotice = new model.Notice({
                     uid: _wish.recvId,
@@ -80,6 +93,7 @@ wish.post('/finish', function(req, res) {
 wish.post('/accept', function(req, res) {
 
     model.Wish.findOne({ _id: req.body.wid }, function(err, _wish) {
+
         _wish.status = 1
         _wish.recvId = req.body.uid
 
@@ -98,6 +112,7 @@ wish.post('/accept', function(req, res) {
                     }
                 })
                 newNotice.save()
+                mail.sendEmail(user.email, user.name, "您的愿望已被"+recer.name+"同学领取",recer.phone)
 
                 var newNotice2 = new model.Notice({
                     uid: _wish.recerId,
@@ -110,6 +125,7 @@ wish.post('/accept', function(req, res) {
                     }
                 })
                 newNotice2.save()
+                mail.sendEmail(recer.email, recer.name, "您已领取"+user.name+"同学的愿望",user.phone)
             })
         })
 
