@@ -99,6 +99,7 @@ wish.post('/accept', function(req, res) {
                 ret: '0001',
                 msg: '你不能领取自己的任务喔=。='
             }))
+            return
         }
         _wish.status = 1
         _wish.recvId = req.body.uid
