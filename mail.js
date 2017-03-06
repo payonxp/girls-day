@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 
 var mail = {}
 
-mail.sendEmail = function(address, name1, promt_name2, phone) {
+mail.sendEmail = function(address, descp, name1, promt_name2, phone) {
   let smtpConfig = {
       host: 'smtp.mxhichina.com',
       port: 25,
@@ -98,7 +98,9 @@ let mailOptions = {
                       <div>
                         <p class="p1">` + name1 + `同学，你好！</p>
                         <p class="p1">欢迎使用心愿墙，</p>
-                        <p class="p1">` + promt_name2 + `，以下是他/她的联系方式，请尽快与其联系：</p>
+                        <p class="p1">` + promt_name2 + `:
+                        <p class="p1">` + descp + `</p>
+                        <p class="p1">以下是他/她的联系方式，请尽快与其联系：</p>
                         <p class="p2">
                           <a target="_blank"  style="background: #83a198; border-radius: 4px; color: #fff; padding: 8px 16px; text-decoration: none; word-break: break-all">手机号码：`+ phone +`</a>
                         </p>

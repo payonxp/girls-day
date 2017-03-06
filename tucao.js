@@ -10,14 +10,19 @@ tucao.get('/getlist', function(req, res) {
 
           var likeList = []
           for (var tucao in list) {
-              model.Like.findOne({ uid: req.query.uid, cid: tucao._id} {
-
+              model.Like.findOne({ uid: req.query.uid, cid: tucao._id}, function(err, like) {
+                  if (like == null) {
+                    likeList.push(false)
+                  } else {
+                    likeList.push(true)
+                  }
               })
           }
 
           res.send(JSON.stringify({
               ret: '0000',
-              data: list
+              data: list,
+              liked: likeList,
           }))
       })
 })
